@@ -1,3 +1,7 @@
+<?php
+  include "koneksi.php";
+  
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -57,7 +61,9 @@
       </div>
     </header>
 
+    
     <main class="main">
+      <a href="hasil.php" class="d-flex justify-content-center">Hasil</a>
       <!-- Services Section -->
       <section id="services" class="services section">
         <!-- Section Title -->
@@ -73,18 +79,18 @@
         <div class="container">
           <div class="row gy-4">
             <div
-              class="col-lg-4 col-md-6"
+              class="nilai col-lg-4 col-md-6"
               data-aos="fade-up"
-              data-aos-delay="200"
-              id="memuaskan">
-              <div
-                class="service-item position-relative d-flex align-items-center">
+              data-aos-delay="200">
+              <form
+                class="service-item position-relative d-flex align-items-center"
+                action="koneksi.php" method="POST">
                 <div class="icon">
+                  <input type="hidden" name="nilai" value="Memuaskan">
                   <img src="assets/img/4.png" style="width: 123px" alt="" />
                 </div>
                 <h3>MEMUASKAN</h3>
-                <!-- The Modal -->
-              </div>
+              </form>
             </div>
             <!-- End Service Item -->
 
@@ -93,7 +99,8 @@
               data-aos="fade-up"
               data-aos-delay="200"
               data-bs-toggle="modal"
-              data-bs-target="#myModal2">
+              id="nilai_cukup">
+              <!-- data-bs-target="#myModal2" -->
               <div
                 class="service-item position-relative d-flex align-items-center">
                 <div class="icon">
@@ -101,6 +108,32 @@
                 </div>
                 <h3>CUKUP</h3>
               </div>
+              <script>
+                const modal = document.getElementById("nilai_cukup");
+
+                modal.addEventListener('click', function(){
+                  Swal.fire({
+                    title: "<strong>HTML <u>example</u></strong>",
+                    // icon: "info",
+                    html: `
+                      You can use <b>bold text</b>,
+                      <a href="#" autofocus>links</a>,
+                      and other HTML tags
+                    `,
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    focusConfirm: false,
+                    confirmButtonText: `
+                      <i class="fa fa-thumbs-up"></i> Great!
+                    `,
+                    confirmButtonAriaLabel: "Thumbs up, great!",
+                    cancelButtonText: `
+                      <i class="fa fa-thumbs-down"></i>
+                    `,
+                    cancelButtonAriaLabel: "Thumbs down"
+                  });
+                })
+              </script>
               <div
                 class="modal"
                 id="myModal2"
@@ -119,23 +152,22 @@
                     </div>
                     <!-- Modal body -->
                     <div class="modal-body d-grid gap-2">
-                      <button
-                        class="btn btn-primary btn-lg"
-                        data-bs-toggle="modal">
-                        Pelayanan Sangat Lama
-                      </button>
-                      <hr />
-                      <button
-                        class="btn btn-primary btn-lg"
-                        data-bs-toggle="modal">
-                        Petugas Tidak Ramah
-                      </button>
-                      <hr />
-                      <button
-                        class="btn btn-primary btn-lg"
-                        data-bs-toggle="modal">
-                        Biaya Mahal
-                      </button>
+                    <form action="koneksi.php" method="post" id="form_cukup">
+                      <input type="hidden" name="nilai" value="Cukup">
+                      <input type="hidden" name="keterangan" value="" id="keterangan_cukup">
+                        <button type="button" class="btn btn-primary btn-lg" onclick="keterangan('Pelayanan Sangat Lama')">
+                          Pelayanan Sangat Lama
+                        </button>
+                        <hr />
+                        <button type="button" class="btn btn-primary btn-lg" onclick="keterangan('Petugas Tidak Ramah')">
+                          Petugas Tidak Ramah
+                        </button>
+                        <hr />
+                        <button type="button" class="btn btn-primary btn-lg" onclick="keterangan('Biaya Mahal')">
+                          Biaya Mahal
+                        </button>
+                      </form>
+
                     </div>
                   </div>
                 </div>
@@ -251,6 +283,12 @@
     <div class="row d-flex justify-content-center mt-2 mb-4">
       <h3 class="text-center mt-4 text-bold">PENGADUAN WHATSAPP</h3>
       <img style="width: 200px" src="assets/img/QR.png" />
+      <a
+        class="d-flex justify-content-center mt-3"
+        target="_blank"
+        href="https://api.whatsapp.com/send?phone=6281327038572&text=Terima%20kasih%20sudah%20menghubungi%20Case%20Manager%20RSUD%20Ajibarang.%20Kami%20dengan%20senang%20hati%20akan%20membantu%20masalah%20Anda.%20Silahkan%20masukan%20kritik%20dan%20saran%20anda%20disini%20%3A%20">
+        <button class="btn btn-success">Pengaduan</button>
+      </a>
     </div>
 
     <footer
@@ -286,21 +324,58 @@
     <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
 
     <!-- Sweetalert -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const memuaskan = document.getElementById("memuaskan");
+     <script>
+     function keterangan(value) {
+        document.getElementById('keterangan_cukup').value = value;
+        const form = document.getElementById("form_cukup");
 
-        memuaskan.addEventListener("click", function () {
-          Swal.fire({
-            title: "Terima Kasih",
-            text: "Penilaian Anda sudah kami terima 😊",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 2300,
+        const formData = new FormData(form);
+        insert(form, formData);
+      }
+       
+      function insert(form, formData){
+        fetch(form.action, {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.status === 'success') {
+              Swal.fire({
+                icon: "success",
+                title: "Terima Kasih",
+                text: "Penilaian Anda sudah kami terima",
+                showConfirmButton: false,
+                timer: 1500
+              })
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Terjadi kesalahan saat mengirim data",
+              });
+            }
+          })
+          .catch(error => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Terjadi kesalahan saat mengirim dataa",
+            });
           });
+      }
+
+      document.querySelectorAll('.nilai').forEach(item => {
+        item.addEventListener('click', function() {
+          const form = this.querySelector('form');
+          const formData = new FormData(form);
+          
+          insert(form, formData);
         });
       });
-    </script>
+      
+      
+     </script>    
 
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
