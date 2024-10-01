@@ -20,6 +20,7 @@
     <!-- Favicons -->
     <link href="assets/img/sipuass.ico" rel="icon" />
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+    
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
@@ -42,6 +43,9 @@
 
     <!-- Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+     <script src="https://kit.fontawesome.com/e954c11678.js" crossorigin="anonymous"></script>
   </head>
 
   <body class="index-page">
@@ -107,95 +111,8 @@
                   <img src="assets/img/1.png" style="width: 90px" alt="" />
                 </div>
                 <h3>CUKUP</h3>
-              </div>
-              <script>
-                const modal = document.getElementById("nilai_cukup");
-
-                modal.addEventListener('click', function(){
-                  Swal.fire({
-                    title: "<strong>HTML <u>example</u></strong>",
-                    // icon: "info",
-                    html: `
-                      You can use <b>bold text</b>,
-                      <a href="#" autofocus>links</a>,
-                      and other HTML tags
-                    `,
-                    showCloseButton: true,
-                    showCancelButton: true,
-                    focusConfirm: false,
-                    confirmButtonText: `
-                      <i class="fa fa-thumbs-up"></i> Great!
-                    `,
-                    confirmButtonAriaLabel: "Thumbs up, great!",
-                    cancelButtonText: `
-                      <i class="fa fa-thumbs-down"></i>
-                    `,
-                    cancelButtonAriaLabel: "Thumbs down"
-                  });
-                })
-              </script>
-              <div
-                class="modal"
-                id="myModal2"
-                tabindex="-1"
-                aria-labelledby="resultModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                      <h4 class="modal-title">SILAHKAN PILIH SALAH SATU</h4>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"></button>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="modal-body d-grid gap-2">
-                    <form action="koneksi.php" method="post" id="form_cukup">
-                      <input type="hidden" name="nilai" value="Cukup">
-                      <input type="hidden" name="keterangan" value="" id="keterangan_cukup">
-                        <button type="button" class="btn btn-primary btn-lg" onclick="keterangan('Pelayanan Sangat Lama')">
-                          Pelayanan Sangat Lama
-                        </button>
-                        <hr />
-                        <button type="button" class="btn btn-primary btn-lg" onclick="keterangan('Petugas Tidak Ramah')">
-                          Petugas Tidak Ramah
-                        </button>
-                        <hr />
-                        <button type="button" class="btn btn-primary btn-lg" onclick="keterangan('Biaya Mahal')">
-                          Biaya Mahal
-                        </button>
-                      </form>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="modal"
-                id="myModal21"
-                tabindex="-1"
-                aria-labelledby="resultModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="myModal31">
-                        Terima Kasih
-                      </h1>
-                    </div>
-                    <div class="modal-footer">
-                      <button class="btn btn-danger" data-bs-toggle="modal">
-                        Close
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              </div>             
             </div>
-            <!-- End Service Item -->
 
             <div
               class="col-lg-4 col-md-6"
@@ -203,74 +120,13 @@
               data-aos-delay="300"
               data-bs-toggle="modal"
               data-bs-target="#myModal3"
-              onclick="closeup()">
+              id="nilai_kurang">
               <div
                 class="service-item position-relative d-flex align-items-center">
                 <div class="icon">
                   <img src="assets/img/3.png" style="width: 90px" alt="" />
                 </div>
                 <h3>KURANG</h3>
-              </div>
-              <div
-                class="modal"
-                id="myModal3"
-                tabindex="-1"
-                aria-labelledby="resultModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                      <h4 class="modal-title">SILAHKAN PILIH SALAH SATU</h4>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"></button>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="modal-body d-grid gap-2">
-                      <button
-                        class="btn btn-primary btn-lg"
-                        data-bs-toggle="modal">
-                        Pelayanan Sangat Lama
-                      </button>
-                      <hr />
-                      <button
-                        class="btn btn-primary btn-lg"
-                        data-bs-toggle="modal">
-                        Petugas Tidak Ramah
-                      </button>
-                      <hr />
-                      <button
-                        class="btn btn-primary btn-lg"
-                        data-bs-toggle="modal">
-                        Biaya Mahal
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="modal"
-                id="myModal31"
-                tabindex="-1"
-                aria-labelledby="resultModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="myModal31">
-                        Terima Kasih
-                      </h1>
-                    </div>
-                    <div class="modal-footer">
-                      <button class="btn btn-danger" data-bs-toggle="modal">
-                        Close
-                      </button>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
             <!-- End Service Item -->
@@ -325,14 +181,7 @@
 
     <!-- Sweetalert -->
      <script>
-     function keterangan(value) {
-        document.getElementById('keterangan_cukup').value = value;
-        const form = document.getElementById("form_cukup");
 
-        const formData = new FormData(form);
-        insert(form, formData);
-      }
-       
       function insert(form, formData){
         fetch(form.action, {
             method: 'POST',
@@ -373,6 +222,52 @@
           insert(form, formData);
         });
       });
+
+      // Nilai Cukup
+      const modalKurang = document.getElementById("nilai_kurang");
+      modalKurang.addEventListener('click', function() {
+        Swal.fire({
+          title: "Pelayanan apa yang Anda rasa <strong>KURANG</strong>?",
+          html: `
+            <form action="koneksi.php" method="POST" id="form_kurang">
+                <input type="hidden" name="nilai" value="Kurang">
+                <p>Silahkan pilih salah satu</p>
+                <input type="radio" id="kurang1" name="keterangan" value="Pelayanan Sangat Lama">
+                <label for="kurang1">Pelayanan Sangat Lama</label><br>
+                <input type="radio" id="kurang2" name="keterangan" value="Petugas Tidak Ramah">
+                <label for="kurang2">Petugas Tidak Ramah</label><br>  
+                <input type="radio" id="kurang3" name="keterangan" value="Biaya Mahal">
+                <label for="kurang3">Biaya Mahal</label><br>
+                <input type="radio" id="" name="keterangan" value="Kebersihan Fasilitas Kurang">
+                <label for="keterangan4">Kebersihan Fasilitas Kurang</label>
+
+            </form>
+          `,
+          showCloseButton: true,
+          showCancelButton: false,
+          focusConfirm: false,
+          confirmButtonText: `Beri Penilaian <i class="fa-solid fa-chevron-right ms-2"></i>`,
+          preConfirm: () => {
+            const selectedOption = document.querySelector('input[name="keterangan"]:checked');
+            if (!selectedOption) {
+              console.log("No option selected");
+              Swal.showValidationMessage('Silahkan pilih salah satu opsi.');
+              return false;
+            } 
+
+            const form = document.getElementById('form_kurang');
+            const formData = new FormData(form);
+
+            formData.set('keterangan', selectedOption.value);
+            return formData;
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            insert(document.getElementById('form_kurang'), result.value);
+          }
+        });
+      });
+      // End Nilai Cukup
       
       
      </script>    

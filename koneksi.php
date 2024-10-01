@@ -24,6 +24,8 @@ function get_Nilai($conn){
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    // var_dump($_POST);die;
     $nilai = $_POST["nilai"];
     $keterangan = isset($_POST["keterangan"]) ? $_POST["keterangan"] : null;
 
