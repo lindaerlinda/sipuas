@@ -22,27 +22,44 @@ function fetchData($conn, $query)
     return $rows;
 }
 
-function get_AllNilai($conn)
+function get_AllNilai($conn, $month = null, $year = null)
 {
-    $query = "SELECT * FROM sipuas ORDER BY timestamp DESC LIMIT 10";
+    $query = "SELECT * FROM sipuas";
+    if ($month && $year) {
+        $query .= " WHERE MONTH(timestamp) = $month AND YEAR(timestamp) = $year";
+    }
+    $query .= " ORDER BY timestamp DESC LIMIT 10";
     return fetchData($conn, $query);
 }
-function get_JumlahNilai($conn)
+
+function get_JumlahNilai($conn, $month = null, $year = null)
 {
     $query = "SELECT COUNT(*) AS count FROM sipuas";
+    if ($month && $year) {
+        $query .= " WHERE MONTH(timestamp) = $month AND YEAR(timestamp) = $year";
+    }
     $result = fetchData($conn, $query);
     return $result[0]['count'];
 }
-function get_EachNilai($conn)
+
+function get_EachNilai($conn, $month = null, $year = null)
 {
-    $query = "SELECT nilai, COUNT(*) AS count FROM sipuas GROUP BY nilai";
+    $query = "SELECT nilai, COUNT(*) AS count FROM sipuas";
+    if ($month && $year) {
+        $query .= " WHERE MONTH(timestamp) = $month AND YEAR(timestamp) = $year";
+    }
+    $query .= " GROUP BY nilai";
     return fetchData($conn, $query);
 }
-function get_EachKeterangan($conn)
+
+function get_EachKeterangan($conn, $month = null, $year = null)
 {
     $query = "SELECT keterangan, COUNT(*) AS count FROM sipuas
-                WHERE keterangan IS NOT NULL AND keterangan <> ''
-                GROUP BY keterangan;";
+                WHERE keterangan IS NOT NULL AND keterangan <> ''";
+    if ($month && $year) {
+        $query .= " AND MONTH(timestamp) = $month AND YEAR(timestamp) = $year";
+    }
+    $query .= " GROUP BY keterangan";
     return fetchData($conn, $query);
 }
 

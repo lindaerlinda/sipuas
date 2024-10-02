@@ -1,9 +1,26 @@
 <?php
 require "koneksi.php";
-$allNilai = get_AllNilai($conn);
-$jumlahNilai = get_JumlahNilai($conn);
-$eachNilai = get_EachNilai($conn);
-$eachKeterangan = get_EachKeterangan($conn);
+
+// Initialize variables
+$filterApplied = false;
+$selectedMonth = null;
+$selectedYear = null;
+
+// Check if a month and year are selected
+if (isset($_GET['month']) || isset($_GET['year'])) {
+    $filterApplied = true;
+    $selectedMonth = $_GET['month'];
+    $selectedYear = $_GET['year'];
+}
+
+// var_dump($selectedMonth);
+// die;
+
+// Modify the existing functions to accept month and year parameters
+$allNilai = get_AllNilai($conn, $selectedMonth, $selectedYear);
+$jumlahNilai = get_JumlahNilai($conn, $selectedMonth, $selectedYear);
+$eachNilai = get_EachNilai($conn, $selectedMonth, $selectedYear);
+$eachKeterangan = get_EachKeterangan($conn, $selectedMonth, $selectedYear);
 
 foreach ($eachNilai as $item) {
     $labels1[] = $item['nilai'];
@@ -37,6 +54,47 @@ foreach ($eachKeterangan as $item) {
             </a>
             <h1 class="fs-2 fw-bold text-success">Hasil Penilaian</h1>
         </div>
+
+        <!-- Add month filter form -->
+        <form class="mb-4">
+            <div class="row align-items-end">
+                <div class="col-auto">
+                    <label for="month" class="form-label">Bulan</label>
+                    <select name="month" id="month" class="form-select">
+                        <option value="">Semua Bulan</option>
+                        <?php
+                        for ($m = 1; $m <= 12; $m++) {
+                            $month = date('F', mktime(0, 0, 0, $m, 1));
+                            $selected = ($m == $selectedMonth) ? 'selected' : '';
+                            echo "<option value='$m' $selected>$month</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-auto p-0">
+                    <label for="year" class="form-label">Tahun</label>
+                    <select name="year" id="year" class="form-select">
+                        <option value="">Semua Tahun</option>
+                        <?php
+                        $currentYear = date('Y');
+                        for ($y = $currentYear; $y >= $currentYear - 5; $y--) {
+                            $selected = ($y == $selectedYear) ? 'selected' : '';
+                            echo "<option value='$y' $selected>$y</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-auto pe-1">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+                <?php if ($filterApplied): ?>
+                    <div class="col-auto p-0">
+                        <a href="hasil.php" class="btn btn-secondary">Reset Filter</a>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </form>
+
         <div class="row w-100 d-flex justify-content-center">
             <div class="col-3">
                 <canvas id="myChart1">
@@ -78,7 +136,6 @@ foreach ($eachKeterangan as $item) {
     <script>
         const ctx1 = document.getElementById('myChart1');
         const ctx2 = document.getElementById('myChart2');
-        const ctx3 = document.getElementById('myChart3');
 
         const chartLabels1 = <?php echo json_encode($labels1); ?>;
         const chartData1 = <?php echo json_encode($counts1); ?>;
