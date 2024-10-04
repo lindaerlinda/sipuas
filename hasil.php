@@ -1,22 +1,23 @@
 <?php
 require "koneksi.php";
+require "auth.php";
 
-// Initialize variables
+require_login();
+
 $filterApplied = false;
 $selectedMonth = null;
-$selectedYear = null;
+$selectedYear = '2024';
 
-// Check if a month and year are selected
-if (isset($_GET['month']) || isset($_GET['year'])) {
+if (isset($_GET['month'])) {
     $filterApplied = true;
     $selectedMonth = $_GET['month'];
+}
+
+if (isset($_GET['year'])) {
+    $filterApplied = true;
     $selectedYear = $_GET['year'];
 }
 
-// var_dump($selectedMonth);
-// die;
-
-// Modify the existing functions to accept month and year parameters
 $allNilai = get_AllNilai($conn, $selectedMonth, $selectedYear);
 $jumlahNilai = get_JumlahNilai($conn, $selectedMonth, $selectedYear);
 $eachNilai = get_EachNilai($conn, $selectedMonth, $selectedYear);
@@ -40,7 +41,12 @@ foreach ($eachKeterangan as $item) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hasil Penilaian</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.dataTables.css" />
+
+    <link href="assets/img/sipuass.ico" rel="icon" />
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
@@ -53,15 +59,20 @@ foreach ($eachKeterangan as $item) {
                 </button>
             </a>
             <h1 class="fs-2 fw-bold text-success">Hasil Penilaian</h1>
+            <a href="auth.php?action=logout" class="position-absolute end-0">
+                <button class="btn btn-sm btn-outline-danger">
+                    Logout
+                </button>
+            </a>
         </div>
 
         <!-- Add month filter form -->
         <form class="mb-4">
             <div class="row align-items-end">
-                <div class="col-auto">
+                <div class="col-auto pe-1">
                     <label for="month" class="form-label">Bulan</label>
                     <select name="month" id="month" class="form-select">
-                        <option value="">Semua Bulan</option>
+                        <option value="">Pilih Bulan</option>
                         <?php
                         for ($m = 1; $m <= 12; $m++) {
                             $month = date('F', mktime(0, 0, 0, $m, 1));
@@ -74,7 +85,6 @@ foreach ($eachKeterangan as $item) {
                 <div class="col-auto p-0">
                     <label for="year" class="form-label">Tahun</label>
                     <select name="year" id="year" class="form-select">
-                        <option value="">Semua Tahun</option>
                         <?php
                         $currentYear = date('Y');
                         for ($y = $currentYear; $y >= $currentYear - 5; $y--) {
@@ -105,7 +115,7 @@ foreach ($eachKeterangan as $item) {
                 </canvas>
             </div>
         </div>
-        <table class="table table-striped table-sm w-50">
+        <table class="table table-striped table-sm w-50" id="semua_nilai">
             <thead>
                 <th>No</th>
                 <th>Nilai</th>
@@ -132,6 +142,12 @@ foreach ($eachKeterangan as $item) {
     <!-- Script -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <!-- DataTable -->
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+        integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
+
+
 
     <script>
         const ctx1 = document.getElementById('myChart1');
