@@ -65,17 +65,18 @@ function get_EachKeterangan($conn, $month = null, $year = null)
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // var_dump($_POST);die;
-    $nilai = $_POST["nilai"];
-    $keterangan = isset($_POST["keterangan"]) ? $_POST["keterangan"] : null;
+    if (isset($_POST['nilai'])) {
+        $nilai = $_POST["nilai"];
+        $keterangan = isset($_POST["keterangan"]) ? $_POST["keterangan"] : null;
 
-    $query = "INSERT INTO sipuas (nilai, keterangan) VALUES ('$nilai', '$keterangan')";
-    $insert = $conn->query($query);
+        $query = "INSERT INTO sipuas (nilai, keterangan) VALUES ('$nilai', '$keterangan')";
+        $insert = $conn->query($query);
 
-    if ($insert) {
-        echo json_encode(['status' => 'success']);
-    } else {
-        echo json_encode(['status' => 'error']);
+        if ($insert) {
+            echo json_encode(['status' => 'success']);
+        } else {
+            echo json_encode(['status' => 'error']);
+        }
     }
 }
 

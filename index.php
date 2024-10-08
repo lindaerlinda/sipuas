@@ -84,7 +84,7 @@ include "koneksi.php";
 
       <div class="container">
         <div class="row gy-4">
-          <div class="nilai col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="nilai col-lg-4 col-md-6" style="cursor:pointer;" data-aos="fade-up" data-aos-delay="200">
             <form class="service-item position-relative d-flex align-items-center" action="koneksi.php" method="POST">
               <div class="icon">
                 <input type="hidden" name="nilai" value="Memuaskan">
@@ -95,7 +95,8 @@ include "koneksi.php";
           </div>
           <!-- End Service Item -->
 
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200" id="nilai_cukup">
+          <div class="col-lg-4 col-md-6" style="cursor:pointer;" data-aos="fade-up" data-aos-delay="200"
+            id="nilai_cukup">
             <!-- data-bs-target="#myModal2" -->
             <div class="service-item position-relative d-flex align-items-center">
               <div class="icon">
@@ -105,7 +106,8 @@ include "koneksi.php";
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300" id="nilai_kurang">
+          <div class="col-lg-4 col-md-6" style="cursor:pointer;" data-aos="fade-up" data-aos-delay="300"
+            id="nilai_kurang">
             <div class="service-item position-relative d-flex align-items-center">
               <div class="icon">
                 <img src="assets/img/3.png" style="width: 90px" alt="" />
@@ -232,16 +234,16 @@ include "koneksi.php";
                       <label class="w-100 text-start rounded-3 text-success p-3 bg-success-subtle custom-label" for="kurang1">Pelayanan Sangat Lama</label>
                   </div>
                   <div>
-                      <input class="d-none" type="radio" id="kurang2" name="keterangan" value="Petugas Tidak Ramah">
-                      <label class="w-100 text-start rounded-3 text-success p-3 bg-success-subtle custom-label" for="kurang2">Petugas Tidak Ramah</label>
+                      <input class="d-none" type="radio" id="kurang2" name="keterangan" value="Pelayanan Tidak Ramah">
+                      <label class="w-100 text-start rounded-3 text-success p-3 bg-success-subtle custom-label" for="kurang2">Pelayanan Tidak Ramah</label>
                   </div>
                   <div>
                       <input class="d-none" type="radio" id="kurang3" name="keterangan" value="Biaya Mahal">
                       <label class="w-100 text-start rounded-3 text-success p-3 bg-success-subtle custom-label" for="kurang3">Biaya Mahal</label>
                   </div>
                   <div>
-                      <input class="d-none" type="radio" id="kurang4" name="keterangan" value="Kebersihan Fasilitas Kurang">
-                      <label class="w-100 text-start rounded-3 text-success p-3 bg-success-subtle custom-label" for="kurang4">Kebersihan Fasilitas Kurang</label>
+                      <input class="d-none" type="radio" id="kurang4" name="keterangan" value="Kebersihan Fasilitas">
+                      <label class="w-100 text-start rounded-3 text-success p-3 bg-success-subtle custom-label" for="kurang4">Kebersihan Fasilitas</label>
                   </div>
               </div>
             </form>
@@ -290,20 +292,21 @@ include "koneksi.php";
                       <label class="w-100 text-start rounded-3 text-success p-3 bg-success-subtle custom-label" for="cukup1">Pelayanan Sangat Lama</label>
                   </div>
                   <div>
-                      <input class="d-none" type="radio" id="cukup2" name="keterangan" value="Petugas Tidak Ramah">
-                      <label class="w-100 text-start rounded-3 text-success p-3 bg-success-subtle custom-label" for="cukup2">Petugas Tidak Ramah</label>
+                      <input class="d-none" type="radio" id="cukup2" name="keterangan" value="Pelayanan Tidak Ramah">
+                      <label class="w-100 text-start rounded-3 text-success p-3 bg-success-subtle custom-label" for="cukup2">Pelayanan Tidak Ramah</label>
                   </div>
                   <div>
                       <input class="d-none" type="radio" id="cukup3" name="keterangan" value="Biaya Mahal">
                       <label class="w-100 text-start rounded-3 text-success p-3 bg-success-subtle custom-label" for="cukup3">Biaya Mahal</label>
                   </div>
                   <div>
-                      <input class="d-none" type="radio" id="cukup4" name="keterangan" value="Kebersihan Fasilitas cukup">
-                      <label class="w-100 text-start rounded-3 text-success p-3 bg-success-subtle custom-label" for="cukup4">Kebersihan Fasilitas Kurang</label>
+                      <input class="d-none" type="radio" id="cukup4" name="keterangan" value="Kebersihan Fasilitas">
+                      <label class="w-100 text-start rounded-3 text-success p-3 bg-success-subtle custom-label" for="cukup4">Kebersihan Fasilitas</label>
                   </div>
               </div>
             </form>
           `,
+
         showCloseButton: true,
         showCancelButton: false,
         focusConfirm: false,

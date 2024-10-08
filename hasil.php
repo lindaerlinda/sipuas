@@ -72,7 +72,7 @@ foreach ($eachKeterangan as $item) {
                 <div class="col-auto pe-1">
                     <label for="month" class="form-label">Bulan</label>
                     <select name="month" id="month" class="form-select">
-                        <option value="">Pilih Bulan</option>
+                        <option value="">Sampai Bulan Ini</option>
                         <?php
                         for ($m = 1; $m <= 12; $m++) {
                             $month = date('F', mktime(0, 0, 0, $m, 1));

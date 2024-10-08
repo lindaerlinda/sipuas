@@ -6,25 +6,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    $query = "SELECT * FROM users WHERE username = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $query = "SELECT * FROM users WHERE username = '$username'";
+    $result = $conn->query($query);
 
     if ($result->num_rows == 1) {
         $user = $result->fetch_assoc();
         if ($password === $user["password"]) {
             $_SESSION["user_id"] = $user["id"];
             $_SESSION["username"] = $user["username"];
-            header("Location: hasil.php");
+            echo json_encode(['status' => 'success']);
             exit();
         } else {
-            $error = "Invalid username or password";
+            echo json_encode(['status' => 'error', 'message' => 'Password salah']);
         }
     } else {
-        $error = "Invalid username or password";
+        echo json_encode(['status' => 'error', 'message' => 'User ndak ada']);
     }
+    exit();
 }
 ?>
 
@@ -39,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="assets/img/sipuass.ico" rel="icon" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -54,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php if (isset($error)): ?>
                     <div class="alert alert-danger"><?php echo $error; ?></div>
                 <?php endif; ?>
-                <form method="POST" action="">
+                <form method="POST" action="" id="loginForm">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control" id="username" name="username" required>
@@ -68,6 +67,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
+
+    <!-- Script -->
+    <!-- Swal -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            $('#loginForm').submit(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: window.location.href,
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            window.location.href = 'hasil.php';
+                        } else if (response.status === 'error') {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Login Failed',
+                                text: response.message || 'An error occurred during login.'
+                            });
+                        } else {
+                            // Handle unexpected response
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Unexpected Response',
+                                text: 'The server returned an unexpected response.'
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('AJAX Error:', textStatus, errorThrown);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong with the request!'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
